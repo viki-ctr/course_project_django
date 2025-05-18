@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mailing Service</title>
+</head>
+<body>
+    <nav>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Выход</a>
+        {% else %}
+            <a href="{% url 'login' %}">Вход</a>
+            <a href="{% url 'register' %}">Регистрация</a>
+        {% endif %}
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+</html>

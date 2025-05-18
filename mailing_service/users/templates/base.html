@@ -1,0 +1,9 @@
+<div class="auth-links">
+    {% if user.is_authenticated %}
+        <span>Привет, {{ user.username }}!</span>
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger">Выйти</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-outline-primary">Войти</a>
+        <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
+    {% endif %}
+</div>

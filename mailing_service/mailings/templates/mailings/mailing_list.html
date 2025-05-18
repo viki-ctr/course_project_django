@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Мои рассылки</h1>
+<a href="{% url 'mailing_create' %}">Создать рассылку</a>
+<ul>
+    {% for mailing in object_list %}
+        <li>{{ mailing.message.subject }} ({{ mailing.status }})</li>
+    {% endfor %}
+</ul>
+{% endblock %}
