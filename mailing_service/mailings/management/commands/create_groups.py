@@ -7,7 +7,17 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         managers, created = Group.objects.get_or_create(name='Менеджеры')
         permissions = Permission.objects.filter(
-            codename__in=['view_mailing', 'view_recipient', 'view_message']
+            codename__in=[
+                'can_view_all_mailings',
+                'can_edit_any_mailing',
+                'can_disable_mailing',
+                'can_view_all_messages',
+                'can_edit_any_message',
+                'can_view_all_recipients',
+                'can_edit_any_recipient',
+            ]
         )
         managers.permissions.set(permissions)
-        self.stdout.write('Группа "Менеджеры" создана')
+        self.stdout.write(
+            self.style.SUCCESS('Группа "Менеджеры" успешно создана с необходимыми правами')
+        )
