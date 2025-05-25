@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Список рассылок</h1>
+
+    {% if perms.mailings.add_mailing %}
+    <a href="{% url 'mailings:create' %}" class="btn btn-primary mb-3">
+        Создать рассылку
+    </a>
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Статус</th>
+                    <th>Сообщение</th>
+                    <th>Дата создания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mailing in object_list %}
+                <tr>
+                    <td>{{ mailing.id }}</td>
+                    <td>{{ mailing.get_status_display }}</td>
+                    <td>{{ mailing.message.subject }}</td>
+                    <td>{{ mailing.created_at|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        <a href="{% url 'mailings:detail' mailing.pk %}" class="btn btn-sm btn-info">
+                            Просмотр
+                        </a>
+                        {% if user == mailing.owner or perms.mailings.can_edit_any_mailing %}
+                        <a href="{% url 'mailings:update' mailing.pk %}" class="btn btn-sm btn-warning">
+                            Редактировать
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Нет доступных рассылок</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
